@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+  --marquee-container-width: 300px;
+}
+/* Vignette overlays */
+
+.marquee {
+  overflow-x: hidden;
+  display: inline-block;
+  animation: pingpong 20s ease-in-out infinite 2s;
+  will-change: transform;
+  padding: auto;
+}
+
+@keyframes pingpong {
+  0% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(calc(-100% + var(--marquee-container-width))); /* 250px is container width */
+  }
+  100% {
+    transform: translateX(0%);
+  }
+
+}
+
+
