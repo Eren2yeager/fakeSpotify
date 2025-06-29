@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --marquee-container-width: 300px;
+  --marquee-container-width: 250px;
 }
 /* Vignette overlays */
 
 .marquee {
   overflow-x: hidden;
   display: inline-block;
-  animation: pingpong 20s ease-in-out infinite 2s;
+  animation: pingpong 25s ease-in-out infinite 3s;
   will-change: transform;
   padding: auto;
 }
@@ -27,3 +27,8 @@
 }
 
 
+/* artist artical */
+.artist-article::after{
+  content: icon;
+  
+}

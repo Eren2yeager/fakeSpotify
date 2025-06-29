@@ -1,14 +1,20 @@
 import React, { useState } from "react";
+import { GrAdd } from "react-icons/gr";
+import { IoIosPlay } from "react-icons/io";
+import { IoIosPause } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { playlists } from "../../Contexts/contexts";
 
 const PlayCard = (props) => {
   return (
-    <div className="playlist-card flex bg-zinc-800  h-[50px] m-1  rounded-xl ">
-      <div className=" w-[50px] h-[50x] bg-zinc-900 rounded-xl">
+    <div className="playlist-card flex bg-zinc-800  h-[50px] m-1  rounded-xl group">
+      <div className="relative w-[50px] h-[50x] bg-zinc-900 rounded-xl">
         <img
           src={`${props.imageUrl}`}
-          className=" w-full h-full object-cover rounded-xl"
+          className=" w-full h-full object-cover rounded-xl group-hover:opacity-40"
           alt=""
         />
+        <IoIosPlay className="absolute bottom-1/4 left-1/4 text-2xl hidden group-hover:block active:transform-[scale(0.9)]" />
       </div>
     </div>
   );
@@ -16,27 +22,36 @@ const PlayCard = (props) => {
 
 const SmallLeft = (props) => {
   const [activeIndex, setActiveIndex] = useState(null);
-  const playlists = props.playlists || [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+  const ContextPlaylists =  React.useContext(playlists)
 
-    // for scrolling effect
+  // for scrolling effect
 
-      const leftNavRef = React.useRef(null)
-       const handleScroll = (e) => {
-        const target = e.target;
-        if (target.scrollTop > 0) {
-          leftNavRef.current.classList.add("shadow-xl", "shadow-gray-950");
-          leftNavRef.current.classList.remove( "bg-transparent");
-        } else {
-          leftNavRef.current.classList.remove("shadow-xl", "shadow-gray-950");
-          leftNavRef.current.classList.add( "bg-transparent");
-        }
-      }
+  const leftNavRef = React.useRef(null);
+  const handleScroll = (e) => {
+    const target = e.target;
+    if (target.scrollTop > 0) {
+      leftNavRef.current.classList.add("shadow-xl", "shadow-gray-900");
+      leftNavRef.current.classList.remove("bg-transparent");
+    } else {
+      leftNavRef.current.classList.remove("shadow-xl", "shadow-gray-900");
+      leftNavRef.current.classList.add("bg-transparent");
+    }
+  };
 
-      
   return (
-    <div className={`small-left flex flex-col items-center justify-center w-95px h-[100%] bg-zinc-900 rounded-xl relative hidden xl:block  overflow-clip `} >
-      <div className="flex flex-col  justify-center  items-center  gap-3 sticky top-0 max-h-[100px] py-3 transition-all duration-300" ref={leftNavRef}>
-        <div className="toggle-playlists-button-1 cursor-pointer" onClick={props.function}>
+    <div
+      className={`small-left  w-95px h-[100%] bg-zinc-900 rounded-xl relative overflow-clip `}
+    >
+      <div
+        className=" flex flex-col  justify-center  items-center  gap-3  w-[100%] h-[100px] p-2 transition-all duration-300 sticky top-0 z-30 overflow-hidden "
+        ref={leftNavRef}
+      >
+        <div
+          className="toggle-playlists-button-1 cursor-pointer"
+          onClick={() => {
+            props.setShowPlaylists(!props.showPlaylist);
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="30px"
@@ -50,20 +65,31 @@ const SmallLeft = (props) => {
 
         <div
           title="Create new Playlist"
-          className="w-7 h-7 flex justify-center items-center ml-1 px-2 py-2  rounded-full bg-zinc-700"
+          className="w-8 h-8 flex justify-center items-center  px-2 py-2  rounded-full bg-zinc-800"
         >
-          <span className="material-symbols-outlined">add</span>
+          <GrAdd size={15} />
         </div>
       </div>
 
-      <div className="relative w-full max-h-[82%] overflow-y-auto " onScroll={handleScroll} >
-        {playlists.map((playlist, index) => (
-          <div  key={index} onClick={() =>{ setActiveIndex(index);console.log(playlists[index]);}}>
-          <PlayCard
+      <div
+        className="relative w-full h-[85%] overflow-y-auto shadow- pb-5"
+        onScroll={handleScroll}
+      >
+        {ContextPlaylists?.map((playlist, index) => (
+          <div
             key={index}
-            imageUrl={playlist.imageUrl || "./src/images/notfound.png"}
-            ></PlayCard>
-            </div>
+            onClick={() => {
+              setActiveIndex(index);
+              console.log(playlists[index]);
+            }}
+          >
+            <Link to={`/playlists/${index}`}>
+              <PlayCard
+                key={index}
+                imageUrl={playlist.imageUrl || "/images/notfound.png"}
+              ></PlayCard>
+            </Link>
+          </div>
         ))}
       </div>
     </div>
