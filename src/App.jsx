@@ -6,6 +6,8 @@ import MainLayout from "./pages/MainLayout.jsx"
 import PlaylistOverview from "./pages/PlaylistOverview.jsx";
 import BigLeft from "./Components/left/bigLeft.jsx";
 import Right from "./Components/right.jsx";
+import Navbar from "./Components/navbar.jsx";
+import Search from "./pages/search.jsx";
 
 
 
@@ -16,30 +18,35 @@ import Right from "./Components/right.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout playlists = {playlists.values} />,
+    element: <MainLayout fromGradient="from-sky-800" />,
     errorElement: <p>Loading...</p>,
     children: [
       { index: true, element: <Home /> },
       { path:"/home", element: <Home /> },
-      { path: "/playlists/:slug", element: <PlaylistOverview /> },
       { path: "/playlists", element: <BigLeft /> },
+      { path: "/search", element: <Search /> },
+      { path: "/playlists/:slug", element: <PlaylistOverview /> },
+
+      { path: "/currentlyPlaying", element: 
+        
+        <Right
+          fromGradient="from-sky-800"
+          imageUrl="/images/anatomy.jpg"
+          artistImageUrl="/images/Naomi.jpg"
+          songName="Space"
+          artistName="Naomi"
+          artistInfo={`Billie Eilish is an American singer-songwriter and musician, born on December 18, 2001, in Los Angeles, California, known for her unique style, angsty lyrics, and soulful vocals. She gained widespread recognition with her debut single "Ocean Eyes" in 2015, which was written and produced by her brother, Finneas O'Connell, with whom she frequently collaborates. `}
+           /> },
 
       
       {path:"*", element: <p className="text-center font-bold p-10">Not found 404</p>}
 
+
     ],
     
   },
-  { path: "/currentlyPlaying", element: 
-        
-    <Right
-      fromGradient="from-sky-800"
-      imageUrl="https://i.discogs.com/nBwIKVVbpGxqcaYibHxXiXcKxnHU3fFK7AAgLGqnDSc/rs:fit/g:sm/q:90/h:600/w:597/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE1OTk4/NjE3LTE2MDE5NzMx/MDQtNjg5NS5qcGVn.jpeg"
-      artistImageUrl="https://www.accesscreative.ac.uk/wp-content/uploads/2025/01/Vocalist-on-stage.jpg"
-      songName="No time to die"
-      artistName="Billie Elish"
-      artistInfo={`Billie Eilish is an American singer-songwriter and musician, born on December 18, 2001, in Los Angeles, California, known for her unique style, angsty lyrics, and soulful vocals. She gained widespread recognition with her debut single "Ocean Eyes" in 2015, which was written and produced by her brother, Finneas O'Connell, with whom she frequently collaborates. `}
-       /> },
+
+
    
 ]);
 

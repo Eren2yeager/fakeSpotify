@@ -4,19 +4,18 @@ import { imagePreviewContext } from '../../Contexts/contexts';
 const ImagePreviewer = () => {
   
   const ContextSelectedImage = useContext(imagePreviewContext)
-  console.log("rendered" + ContextSelectedImage.src)
   
 
   return (
     <div>
       {/* Fullscreen Modal */}
       {ContextSelectedImage?.src && (
-        <div className="fixed inset-0 z-50 backdrop-blur-xl bg-opacity-80 flex items-center justify-center">
-          <div className="relative max-w-[400px] flex flex-col">
+        <div className="fixed inset-0 z-50 backdrop-blur-xl bg-opacity-80 flex items-center justify-center overflow-auto">
+          <div className="relative max-w-screen max-h-screen  flex flex-col">
             <img
               src={ContextSelectedImage.src}
               alt="Full View"
-              className=" object-contain shadow-2xl shadow-zinc-950"
+              className=" object-cover shadow-2xl shadow-zinc-950"
             />
             <button
               onClick={() => {(ContextSelectedImage.setSrc(null));console.log("by imagepreview" + ContextSelectedImage.src)}}

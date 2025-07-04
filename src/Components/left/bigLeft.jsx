@@ -4,7 +4,7 @@ import { GrAdd } from "react-icons/gr";
 import { IoIosPlay } from "react-icons/io";
 import { IoIosPause } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { playlists } from "../../Contexts/contexts";
+import { playlists ,showPlaylistsContext } from "../../Contexts/contexts";
 
 const PlayCard = (props) => {
   return (
@@ -34,6 +34,7 @@ const PlayCard = (props) => {
 const BigLeft = (props) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const ContextPlaylists = useContext(playlists);
+  const ContextShowPlaylists = useContext(showPlaylistsContext);
 
 
   // for scrolling effect
@@ -52,14 +53,14 @@ const BigLeft = (props) => {
 
   return (
     <div
-      className={`left max-w-auto h-[100%]  rounded-xl bg-zinc-900   py-1  overflow-clip`}
+      className={`left max-w-[100%] h-[100%]  rounded-xl bg-zinc-900   py-1  overflow-clip text-white z-10 group/bigLeft`}
     >
-      <div className="flex flex-row justify-between items-center px-3 my-3 gap-3 group/bigLeft">
+      <div className="flex flex-row justify-between items-center px-3 my-3 gap-3 ">
         <div className="flex gap-2 justify-center items-center transform sm:translate-x-[-30px] group-hover/bigLeft:translate-x-[0px] transition-all duration-150">
           <div
             className="toggle-playlists-button-2  cursor-pointer transform translate-x-[-30px] group-hover/bigLeft:translate-x-[0px] transition-all duration-100 hidden sm:block"
             onClick={() => {
-              props.setShowPlaylists(!props.showPlaylist);
+              ContextShowPlaylists.setShowPlaylists(false);
             }}
           >
             <svg
@@ -76,15 +77,18 @@ const BigLeft = (props) => {
         </div>
         <div
           title="Create new Playlist"
-          className="w-auto flex justify-center items-center ml-1 p-2 sm:py-1  rounded-full hover:bg-zinc-700 transition-all duration-500 bg-zinc-800 "
+          className={`w-auto flex justify-center items-center ml-1 p-2 rounded-full hover:bg-zinc-700 transition-all duration-500 bg-zinc-800 cursor-pointer`}
+          
         >
-          <GrAdd className="text-xl"  />
-          <p className="font-bold pl-1 hidden sm:block">Create</p>
+          <GrAdd className="text-xl "  />
+          { props.leftWidth > 285  && 
+            <p className="font-bold pl-1 hidden sm:block">Create</p> 
+          }
         </div>
        </div>
 
        <div
-        className="flex justify-start gap-2 px-3 pb-2 max-h-[50px] transition-all duration-500"
+        className="relative flex justify-start gap-2 px-3 pb-2 max-h-[50px] transition-all duration-500"
         ref={leftNavRef}
        >
         <ListRender
@@ -94,7 +98,7 @@ const BigLeft = (props) => {
         </div>
 
        <div
-        className="playlist-container w-full max-h-[85%] px-3 overflow-y-auto pb-3"
+        className="playlist-container w-auto max-h-[100%] px-3 overflow-y-auto pb-65 sm:pb-25"
         onScroll={handleScroll}
        >
         {ContextPlaylists?.map((playlist, index) => (

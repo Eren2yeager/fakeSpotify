@@ -3,7 +3,7 @@ import { GrAdd } from "react-icons/gr";
 import { IoIosPlay } from "react-icons/io";
 import { IoIosPause } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { playlists } from "../../Contexts/contexts";
+import { playlists ,showPlaylistsContext } from "../../Contexts/contexts";
 
 const PlayCard = (props) => {
   return (
@@ -23,6 +23,7 @@ const PlayCard = (props) => {
 const SmallLeft = (props) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const ContextPlaylists =  React.useContext(playlists)
+  const ContextShowPlaylists =  React.useContext(showPlaylistsContext)
 
   // for scrolling effect
 
@@ -49,7 +50,7 @@ const SmallLeft = (props) => {
         <div
           className="toggle-playlists-button-1 cursor-pointer"
           onClick={() => {
-            props.setShowPlaylists(!props.showPlaylist);
+            ContextShowPlaylists.setShowPlaylists(true);
           }}
         >
           <svg
@@ -72,7 +73,7 @@ const SmallLeft = (props) => {
       </div>
 
       <div
-        className="relative w-full h-[85%] overflow-y-auto shadow- pb-5"
+        className="relative w-full max-h-[100%] overflow-y-auto  pb-25"
         onScroll={handleScroll}
       >
         {ContextPlaylists?.map((playlist, index) => (

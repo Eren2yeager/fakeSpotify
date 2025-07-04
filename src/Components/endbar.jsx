@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { isPlayingContext, audioRefContext } from "../Contexts/contexts";
-import { NavLink } from "react-router-dom";
+import { NavLink ,useNavigate} from "react-router-dom";
 
 import { IoIosPlay } from "react-icons/io";
 import { IoIosPause } from "react-icons/io";
 
 import { GoHome } from "react-icons/go";
 import { GoHomeFill } from "react-icons/go";
-import { FiSearch } from "react-icons/fi";
+import { RiSearchEyeFill } from "react-icons/ri";
+import { RiSearchLine } from "react-icons/ri";
 import { IoLibraryOutline } from "react-icons/io5";
 import { IoLibrary } from "react-icons/io5";
 
@@ -27,7 +28,7 @@ export const Endbar = (props) => {
           <div
             className={`text-white flex justify-between bg-cover h-[75px] w-[100%]`}
           >
-            <div className="endbar-left w-[25%] h-[100%] flex items-center">
+            <div className="endbar-left max-w-[25%] h-[100%] flex items-center">
               <EndLeft
                 imageUrl={props.imageUrl}
                 songName={props.songName}
@@ -36,10 +37,10 @@ export const Endbar = (props) => {
               />
             </div>
 
-            <div className="endbar-middle w-[50%] h-[100%] ">
+            <div className="endbar-middle min-w-[50%] h-[100%] ">
               <EndMiddle />
             </div>
-            <div className="endbar-right w-[25%] h-[100%]">
+            <div className="endbar-right max-w-[25%] h-[100%]">
               <EndRight />
             </div>
           </div>
@@ -50,11 +51,14 @@ export const Endbar = (props) => {
 };
 
 export const SmallEndbar = (props) => {
+
+  const navigate = useNavigate();
   return (
     <footer
-      className={`backdrop-blur-xs rounded-t-3xl text-amber-50 sm:h-[75px] w-[100%] flex flex-col  justify-start  h-[150px] fixed bottom-0 bg-gradient-to-t from-black to-transparent pb-15 px-2 ${props.className} `}
+      className={`backdrop-blur-xs z-10 rounded-t-3xl text-amber-50 sm:h-[75px] w-[100%] flex flex-col  justify-start  h-[150px] fixed bottom-0 bg-gradient-to-t from-black to-transparent pb-15 px-2 ${props.className} `}
     >
-      <NavLink to="/currentlyPlaying">
+      <div onClick={()=>{navigate("/currentlyPlaying")}}>
+
       <RectangularSongCard
         marquee={{ show: true, fadeColor: props.fromGradient }}
         showPlayButton={true}
@@ -62,12 +66,14 @@ export const SmallEndbar = (props) => {
         showAudioComponent={true}
         fromGradient={props.fromGradient}
         songName={props.songName}
-        artitName={props.artistName}
+        artistName={props.artistName}
         imageUrl={props.imageUrl}
         showRightButton={true}
         className="justify-between"
-      />
+        />
+        </div>
 
+      <NavLink to="/currentlyPlaying">
       </NavLink>
 
 
@@ -79,8 +85,15 @@ export const SmallEndbar = (props) => {
             <GoHome className="text-3xl font-bold " />
           )}
         </NavLink>
+        
+        <NavLink to="/search">
+        {({isActive}) =>isActive ? (
+            <RiSearchEyeFill className="text-3xl font-bold " />
+          ) : (
+            <RiSearchLine className="text-3xl font-bold " />
+          )}
+        </NavLink>
 
-        <FiSearch className="text-2xl font-bold" />
         <NavLink to="/playlists">
           {({isActive}) =>isActive ? (
             <IoLibrary className="text-2xl font-bold " />

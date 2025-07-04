@@ -90,7 +90,7 @@ export default function SmartMarquee(props) {
     >
       <div
         ref={textRef}
-        className={`inline-block px-1 font-sans ${props.textClassName}`}
+        className="inline-block px-1 font-sans"
         style={{
           willChange: "transform",
           whiteSpace: "nowrap",

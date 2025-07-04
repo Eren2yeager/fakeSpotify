@@ -10,6 +10,7 @@
   display: inline-block;
   animation: pingpong 25s ease-in-out infinite 3s;
   will-change: transform;
+  background-color: #071e938e;
   padding: auto;
 }
 

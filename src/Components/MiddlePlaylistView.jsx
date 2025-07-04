@@ -10,6 +10,7 @@ import { IoAddOutline } from "react-icons/io5";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { TiTick } from "react-icons/ti";
 import { BsThreeDots } from "react-icons/bs";
+import { RiSearchLine } from "react-icons/ri";
 
 const MiddlePlaylistView = (props) => {
   const playlistsArrayContext = useContext(playlists);
@@ -91,22 +92,24 @@ const MiddlePlaylistView = (props) => {
 
   // handeling slugs
   const { slug } = useParams();
-  console.log("index is" + slug);
   const playlist = playlistsArrayContext[parseInt(slug)];
 
   return (
     <div
-      className="scroll-container  relative w-[100%] h-[100%] rounded-xl  overflow-y-auto "
+      className="scroll-container  relative w-[100%] h-[100%] rounded-xl  overflow-y-auto text-white  bg-zinc-900"
       onScroll={handleScroll}
     >
-      <div className=" w-[100%]   rounded-xl flex flex-col ">
-        <div className="w-[100%] h-[300px] sm:h-[250px] bg-sky-700  flex flex-col sm:flex-row items-center justify-end sm:justify-start p-5 gap-3 overflow-hidden shadow-2xl shadow-black ">
+      <div className=" w-[100%]   rounded-xl flex flex-col">
+        <div className={`${playlist.bgColor || "bg-transparent"}   w-[100%] z-11 h-[300px] sm:h-[250px] flex flex-col sm:flex-row items-center justify-end sm:justify-start p-5 gap-3 overflow-hidden shadow-xl shadow-black/35 `}
+        
+        >
+          
           <div className="max-w-[155px] min-w-[150px] sm:min-w-[200px] h-[150px] sm:h-[200px] sm:self-end"  >
             <img
               src={playlist.imageUrl || `/images/notfound.png`}
               alt="playlist-img"
-              className="w-[100%] h-[100%] object-cover rounded-xl shadow-lg shadow-gray-900 cursor-pointer"
-              onClick={(e) => {(ContextSelectedImage.setSrc(`${e.target.src}`));console.log("by middle" + ContextSelectedImage.src)}}
+              className="w-[100%] h-[100%] object-cover rounded-xl shadow-lg shadow-black cursor-pointer"
+              onClick={(e) => {(ContextSelectedImage.setSrc(`${e.target.src}`));}}
             />
           </div>
 
@@ -129,10 +132,10 @@ const MiddlePlaylistView = (props) => {
         </div>
 
         {playlist.songs?.length > 0 ? (
-          <div className=" text-white bg-gradient-to-b from-sky-900 to-black h-screen">
+          <div className={` text-white bg-gradient-to-b ${playlist.bgColor || "bg-transparent"}  to-zinc-900 h-screen `}>
             <div
-              className={`sticky top-0 z-10  flex  items-center justify-between  transition-colors duration-300 ${
-                scrolled ? "bg-sky-700" : "bg-transparent"
+              className={`sticky top-0 z-10 h-[60px]  flex  items-center justify-between  transition-colors duration-300 ${
+                scrolled ? playlist.bgColor || "bg-zinc-900 " : "bg-transparent"
               }  py-3 px-5 `}
             >
               <div className="p-2  rounded-full bg-green-500  transition-all duration-300 active:transform-[scale(0.95)] cursor-pointer">
@@ -147,21 +150,18 @@ const MiddlePlaylistView = (props) => {
                 </p>
               )}
 
-              <div className="ml-5 max-w-[80%] sm:max-w-[30%] flex   items-center justify-start backdrop-blur-3xl brightness-150   gap-2  rounded-2xl h-10 border-2 border-transparent  cursor-pointer ">
-                <img
-                  src="/images/search.svg"
-                  alt="search-icon"
-                  className="search-icon my-2 ml-2 min-w-5 h-5 invert text-white"
-                  onClick={handleIconClick}
-                />
+              <div className="max-w-[200px] flex   items-center justify-start backdrop-blur-3xl brightness-150   transition-all duration-300  rounded-full h-10 border-2 border-transparent  cursor-pointer ">
+              <RiSearchLine className="search-icon  m-2  text-xl text-white"
+               onClick={handleIconClick}
+              />
                 <div className={`${
-                    showInput ? `w-[90%]` : `w-[0]`
+                    showInput ? `w-[70%]` : `w-[0]`
                   }  overflow-hidden flex justify-start relative`}>
 
                 <input
                   type="text"
                   className={`input_button w-auto text-amber-50  outline-none transition-all duration-300 `}
-                  placeholder="Search"
+                  placeholder="Search in playlist"
                   ref={inputRef}
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
@@ -182,10 +182,11 @@ const MiddlePlaylistView = (props) => {
                   </div>
               </div>
             </div>
+            
 
             {/* for songs view */}
             <div
-              className={`group/titleHeader sticky  top-15 z-10 p-5 mb-2 h-10 flex items-center border-b-[0.5px] border-b-[#747474b2]  text-sm font-medium text-gray-400 bg-slate-500  sm:px-10   transition-colors duration-300 ${
+              className={`group/titleHeader sticky  top-[60px] z-10 p-5 mb-2 h-10 flex items-center border-b-[0.5px] border-b-[#747474b2]  text-sm font-medium text-gray-300 bg-slate-500  sm:px-10   transition-colors duration-300 ${
                 scrolled ? "bg-zinc-900" : "bg-transparent"
               }`}
             >
@@ -216,7 +217,7 @@ const MiddlePlaylistView = (props) => {
               </div>
               <div
                 style={{ width: `${dateAddedWidth}px` }}
-                className="mr-auto relative truncate hidden sm:block"
+                className="mr-auto relative truncate hidden lg:block"
               >
                 <span className="">Date added</span>
                 <div
@@ -234,7 +235,7 @@ const MiddlePlaylistView = (props) => {
             {playlist.songs?.map((song, index) => (
               <div
                 key={index}
-                className="flex items-center p-5 border-b border-zinc-800 hover:backdrop-blur-2xl brightness-200  sm:mx-5 rounded-[5px] group/songbar"
+                className="flex items-center text-gray-300 p-5 border-b border-white/15 hover:bg-white/8  sm:mx-5 rounded-[5px] group/songbar"
                 onMouseEnter={() => {
                   setIsHovering(index);
                 }}
@@ -256,18 +257,18 @@ const MiddlePlaylistView = (props) => {
                   className=" truncate  flex items-center gap-3"
                 >
                   <img
-                    src={song.cover || "/images/notfound.png"}
+                    src={song.imageUrl || "/images/notfound.png"}
                     alt={`song cover ${index}`}
-                    className="w-10 h-10 rounded brightness-50 cursor-pointer"
+                    className="w-10 h-10 rounded  cursor-pointer"
                     title="view image"
                     onClick={(e) => {(ContextSelectedImage.setSrc(`${e.target.src}`));console.log("by middle" + ContextSelectedImage.src)}}
                   />
                   <div className="truncate">
-                    <div className="font-semibold text-white  truncate">
-                      {song.title}
+                    <div className="font-semibold text-gray-300  truncate">
+                      {song.songName}
                     </div>
-                    <div className="text-sm text-gray-400 max-w-[100%] truncate">
-                      {song.artist}
+                    <div className="text-sm  max-w-[100%] truncate">
+                      {song.artistName}
                     </div>
                   </div>
                 </div>
@@ -276,11 +277,11 @@ const MiddlePlaylistView = (props) => {
                   style={{ width: `${albumWidth}px` }}
                   className=" truncate hidden sm:block"
                 >
-                  {song.album}
+                  {song.albumName}
                 </div>
                 <div
                   style={{ width: `${dateAddedWidth}px` }}
-                  className="mr-auto truncate hidden sm:block"
+                  className="mr-auto truncate hidden lg:block"
                 >
                   {song.added}
                 </div>

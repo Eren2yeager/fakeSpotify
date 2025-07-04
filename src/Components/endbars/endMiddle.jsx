@@ -50,33 +50,7 @@ const EndMiddle = () => {
     ContextisPlaying.setisPlaying(!ContextisPlaying.isPlaying)
   }
 
-  useEffect(() => {
-
-    const handleKeyDown = (event) => {
-
-
-      const isTyping =
-      document.activeElement.tagName === 'INPUT' ||
-      document.activeElement.tagName === 'TEXTAREA' ||
-      document.activeElement.isContentEditable;
   
-       if (isTyping) return; // ⛔ Don't trigger anything if user is typing
-
-
-      if (event.key === ' ') {
-          handlePlayPause();
-      } 
-
-    };
-
-    // Add the event listener when the component mounts
-    document.addEventListener('keydown', handleKeyDown);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }); 
 
   return(
     <>
@@ -96,14 +70,12 @@ const EndMiddle = () => {
         <MdSkipNext className="text-3xl  text-gray-400  hover:animate-pulse transition-all duration-100  cursor-pointer" title="Next" /> 
         <BsRepeat className={`text-xl  cursor-pointer ${toggleRepeat  ? `text-green-400 ` : `text-gray-400 hover:animate-pulse `}  transition-all duration-300`}  onClick={()=>{setToggleRepeat(!toggleRepeat); setToggleShuffle(false)}} title="Repeat" />
 
-    </div>
+     </div>
 
-    <div className="down w-[100%] flex justify-center items-center gap-2 self-baseline-last">
 
+      
       <AudioComponent showTime={true} />
 
-
-    </div>
     </div>
     </>
 

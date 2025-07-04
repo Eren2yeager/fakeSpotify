@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IoIosPlay } from "react-icons/io";
 import { IoIosPause } from "react-icons/io";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
 const Card = (props) => {
   return (
@@ -84,38 +86,30 @@ const HorizentalItemsList = (props) => {
       if (direction === "left") {
         current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
       } else {
-        current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        current.scrollBy({ left: scrollAmount, behavior: "smooth" }); 
       }
     }
   };
 
   return (
     <>
-      <div className="relative">
-        <div className="font-bold px-5 text-2xl">{props.title}</div>
+      <div className="relative  group/horizentalList">
+        <div className="font-bold px-4 text-2xl">{props.title}</div>
         <div
           className=" max-w-[100%] overflow-auto sm:overflow-hidden"
           ref={parentRef}
           onScroll={handleScroll}
         >
           <div
-            className={` hidden sm:block bg-zinc-700 px-3 py-2 w-10 h-10 rounded-full absolute left-0 top-1/3 z-10  opacity-80 ${
+            className={`  hidden sm:block bg-zinc-700 p-1  rounded-full absolute cursor-pointer left-0 top-1/3 z-10 opacity-80 ${
               showLeftArrow == false ? `invisible` : "visible"
             } hover:bg-zinc-900`}
             onClick={() => scroll("left")}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#e3e3e3"
-            >
-              <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" />
-            </svg>
+            <MdOutlineKeyboardArrowLeft className="text-3xl" />
           </div>
 
-          <div className="flex w-fit h-fit px-1 bg-transparent " ref={childRef}>
+          <div className="flex w-fit h-fit  bg-transparent " ref={childRef}>
             {listItems.map((item, index) => (
               <div
                 key={index}
@@ -134,20 +128,12 @@ const HorizentalItemsList = (props) => {
             ))}
           </div>
           <div
-            className={` hidden sm:block bg-zinc-700 p-2 w-10 h-10 rounded-full absolute  right-0 top-1/3 z-10 opacity-80  ${
+            className={` hidden sm:block bg-zinc-700 p-1  rounded-full cursor-pointer absolute  right-0 top-1/3 z-10 opacity-80  ${
               showRightArrow == false ? `invisible` : "visible"
             }  hover:bg-zinc-900`}
             onClick={() => scroll("right")}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#e3e3e3"
-            >
-              <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
-            </svg>
+            <MdOutlineKeyboardArrowRight className="text-3xl" />
           </div>
         </div>
       </div>
